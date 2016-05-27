@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_action :find_message
   before_action :find_comment, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!
 
 
   def create
@@ -14,7 +15,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  def edit    
+  def edit
   end
 
   def update
@@ -23,6 +24,11 @@ class CommentsController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def destroy
+    @comment.destroy
+    redirect_to message_path(@message)
   end
 
   private
